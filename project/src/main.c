@@ -35,12 +35,12 @@ int main(int argc, const char** argv) {
     switch (Test_case) {
         case TST_FOO_FIX: {
             int to = atoi(data);
-            size_t ticks_count = timer_from(to);
+            int ticks_count = timer_from(to);
             printf("%d\n", ticks_count);
             break;
         }
         case TST_FOO_IMPL: {
-            if (argc = 4) {
+            if (argc == 4) {
                 // int base = atoi(data);
                 // int pow =  atoi(argv[3]);
                 // int res = custom_pow(base, pow);    // TODO: Implement me
@@ -49,6 +49,7 @@ int main(int argc, const char** argv) {
             } else {
                 return ERR_ARGS_COUNT;
             }
+            break;
         }
         case TST_MOD_IMPL: {
             // int num = atoi(data);

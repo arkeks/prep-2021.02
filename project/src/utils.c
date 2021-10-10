@@ -1,10 +1,17 @@
 #include "utils.h"
 
-size_t timer_from(unsigned char from) {
-    size_t counter;
-    for (unsigned char i = from; i >= 0; --i) {
+size_t timer_from(int from) {
+    size_t counter = 0;
+    for (int i = from; i >= 0; --i) {
         ++counter;
-        printf(i);
+        if (i == 0)
+        {
+        printf("%d\n", i);
+        }
+        else
+        {
+        printf("%d ", i);
+        }
     }
     return counter;
 }
