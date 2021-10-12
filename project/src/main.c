@@ -1,4 +1,6 @@
 #include "utils.h"
+#include "is_simple.h"
+#include "enum.h"
 
 #define ERR_ARGS_COUNT (-1)
 #define ERR_WRONG_FLG (-2)
@@ -6,6 +8,7 @@
 #define TST_FOO_FIX     1
 #define TST_FOO_IMPL    2
 #define TST_MOD_IMPL    3
+#define TST_MOD_ENUM    4
 
 
 /* NOTE(stitaevskiy):
@@ -41,22 +44,29 @@ int main(int argc, const char** argv) {
         }
         case TST_FOO_IMPL: {
             if (argc == 4) {
-                // int base = atoi(data);
-                // int pow =  atoi(argv[3]);
-                // int res = custom_pow(base, pow);    // TODO: Implement me
-
-                // printf("%i\n", res);
+                int base = atoi(data);
+                int pow =  atoi(argv[3]);
+                int res = custom_pow(base, pow);    // TODO(arkeks): Implement me
+                printf("%i\n", res);
             } else {
                 return ERR_ARGS_COUNT;
             }
             break;
         }
         case TST_MOD_IMPL: {
-            // int num = atoi(data);
+            int num = atoi(data);
 
-            // TODO: Print to stdout `1` if `num` is prime number and `0` otherwise
+            // TODO(arkeks): Print to stdout `1` if `num` is prime number and `0` otherwise
             // This function MUST be implemented in
             // a separate C-module (not in `main` or `utils` module)
+
+            printf("%d", is_simple(num));
+            break;
+        }
+        case TST_MOD_ENUM: {
+            int num = atoi(data);
+            enumeration(num);
+            break;
         }
         default: {
             return ERR_WRONG_FLG;
