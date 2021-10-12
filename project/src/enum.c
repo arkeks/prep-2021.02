@@ -1,5 +1,4 @@
 #include "enum.h"
-//enumeration module for 5th part of hw-1
 
 int enumeration(int n) {
     if (n == 1) {
