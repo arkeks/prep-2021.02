@@ -6,7 +6,7 @@ SRCS = \
        project/src/main.c \
        project/src/utils.c \
        project/src/is_simple.c\
-       project/src/enum.c
+       project/src/num_sequence.c
 
 .PHONY: all build rebuild check test clean
 

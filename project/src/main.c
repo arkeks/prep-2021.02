@@ -1,6 +1,6 @@
 #include "utils.h"
 #include "is_simple.h"
-#include "enum.h"
+#include "num_sequence.h"
 
 #define ERR_ARGS_COUNT (-1)
 #define ERR_WRONG_FLG (-2)
@@ -10,43 +10,40 @@
 #define TST_MOD_IMPL    3
 #define TST_MOD_ENUM    4
 
-
-/* NOTE(stitaevskiy):
- * We use `atoi` function just for simplification and code reducing.
- * This function doesn't report conversation errors.
- * For safety program we recommend using `strtol` and its analogs.
- * (See `man atoi` and `man strtol` for more info).
- *
- * const char str_num[] = "1234";
- * char* end = NULL;
- * int val = (int) strtol(str_num, &end, 0);
- * if (end != '\0') {
- *     //ERROR
- * }
- *
- * */
-
 int main(int argc, const char** argv) {
     if (argc < 3) {
         return ERR_ARGS_COUNT;
     }
 
-    int Test_case = atoi(argv[1]);
+    char* end = NULL;
+    int test_case = (int) strtol(argv[1], &end, 0);
+    if (*end != '\0') {
+        return ERR_WRONG_FLG;
+    }
     const char* data;
     data = argv[2];
 
-    switch (Test_case) {
+    switch (test_case) {
         case TST_FOO_FIX: {
-            int to = atoi(data);
+            int to = (int) strtol(data, &end, 0);
+            if (*end != '\0') {
+                return ERR_WRONG_FLG;
+            }
             int ticks_count = timer_from(to);
             printf("%d\n", ticks_count);
             break;
         }
         case TST_FOO_IMPL: {
             if (argc == 4) {
-                int base = atoi(data);
-                int pow =  atoi(argv[3]);
-                int res = custom_pow(base, pow);    // TODO(arkeks): Implement me
+                int base = (int) strtol(data, &end, 0);
+                if (*end != '\0') {
+                    return ERR_WRONG_FLG;
+                }
+                int pow =  (int) strtol(argv[3], &end, 0);
+                if (*end != '\0') {
+                    return ERR_WRONG_FLG;
+                }
+                int res = custom_pow(base, pow);
                 printf("%i\n", res);
             } else {
                 return ERR_ARGS_COUNT;
@@ -54,18 +51,19 @@ int main(int argc, const char** argv) {
             break;
         }
         case TST_MOD_IMPL: {
-            int num = atoi(data);
-
-            // TODO(arkeks): Print to stdout `1` if `num` is prime number and `0` otherwise
-            // This function MUST be implemented in
-            // a separate C-module (not in `main` or `utils` module)
-
+            int num = (int) strtol(data, &end, 0);
+            if (*end != '\0') {
+                return ERR_WRONG_FLG;
+            }
             printf("%d", is_simple(num));
             break;
         }
         case TST_MOD_ENUM: {
-            int num = atoi(data);
-            enumeration(num);
+            int num = (int) strtol(data, &end, 0);
+            if (*end != '\0') {
+                return ERR_WRONG_FLG;
+            }
+            num_sequence(num);
             break;
         }
         default: {
