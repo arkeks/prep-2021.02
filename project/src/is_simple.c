@@ -6,7 +6,7 @@ char is_simple(int num) {
 	    return 0;
 	}
 	for (int i = 2; i <= sqrt(num); ++i) {
-	    if (num % i == 0 || num == 1) {
+	    if (num % i == 0) {
 	    	return 0;
 	    }
 	}
