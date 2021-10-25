@@ -14,6 +14,6 @@ struct student_info {
         };
 
 void write_to_file(FILE* filename, struct student_info* data);
-void read_from_file(FILE* filename, struct student_info* data);
+void read_from_file(FILE* filename, struct student_info data);
 
 #endif  // PROJECT_INCLUDE_TEST_H_

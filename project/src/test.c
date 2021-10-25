@@ -9,11 +9,11 @@ int main(void) {
     strcpy(student_1.group, "IU4-31B");
     strcpy(student_1.status, "PASSED");
     FILE* students_list = fopen(filename, "w");
-    write_to_file(filename, &student_1);
+    write_to_file(students_list, &student_1);
     fclose(students_list);
     struct student_info student_1_check = {0};
     FILE* students_list_check = fopen(filename, "r");
-    read_from_file(filename, &student_1_check);
+    read_from_file(students_list, student_1_check);
     if (student_1.group == student_1_check.group) {
         printf("Succesful writing.");
         } else {
