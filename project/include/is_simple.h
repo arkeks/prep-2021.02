@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdbool.h>
+
+#ifndef PROJECT_INCLUDE_IS_SIMPLE_H_
+#define PROJECT_INCLUDE_IS_SIMPLE_H_
+#define TRUE 1
+#define FALSE 0
+
+bool is_simple(int num);
+
+#endif  // PROJECT_INCLUDE_IS_SIMPLE_H_
