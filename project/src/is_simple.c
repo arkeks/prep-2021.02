@@ -1,7 +1,7 @@
 #include "is_simple.h"
 
 // Function checks whether an input number is simple
-char is_simple(int num) {
+bool is_simple(int num) {
 	if (num <= 1) {
 	    return FALSE;
 	}

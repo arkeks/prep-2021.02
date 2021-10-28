@@ -1,6 +1,6 @@
 #include "utils.h"
 
-size_t timer_from(int from) {
+size_t timer_from(unsigned int from) {
     size_t counter = 0;
     for (int i = from; i >= 0; --i) {
         ++counter;
@@ -13,10 +13,16 @@ size_t timer_from(int from) {
     return counter;
 }
 
-int custom_pow(int base, int power) {
-	if (power == 0) {
-	return 1;
-	} else {
-	return base*custom_pow(base, power - 1);
-	}
+float custom_pow(int base, int power) {
+    float res = 1;
+	if (power >= 0) {
+        for (int i = 0; i < power; ++i) {
+            res *= base;
+        }
+    } else {
+        for (int i = 0; i > power; --i) {
+            res *= (1/(float)base);
+        }
+    }
+    return res;
 }

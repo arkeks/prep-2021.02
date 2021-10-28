@@ -30,7 +30,7 @@ int main(int argc, const char** argv) {
                 return ERR_WRONG_FLG;
             }
             int ticks_count = timer_from(to);
-            printf("%d\n", ticks_count);
+            printf("%d", ticks_count);
             break;
         }
         case TST_FOO_IMPL: {
@@ -39,12 +39,16 @@ int main(int argc, const char** argv) {
                 if (*end != '\0') {
                     return ERR_WRONG_FLG;
                 }
-                int pow =  (int) strtol(argv[3], &end, 0);
+                int pow = (int) strtol(argv[3], &end, 0);
                 if (*end != '\0') {
                     return ERR_WRONG_FLG;
                 }
-                int res = custom_pow(base, pow);
-                printf("%i\n", res);
+                float res = custom_pow(base, pow);
+                if (pow >= 0) {
+                    printf("%d\n", (int)res);
+                } else {
+                    printf("%f\n", res);
+                }
             } else {
                 return ERR_ARGS_COUNT;
             }
