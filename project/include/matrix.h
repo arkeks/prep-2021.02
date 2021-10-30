@@ -1,10 +1,15 @@
-#ifndef _MATRIX_H_
-#define _MATRIX_H_
-
+#ifndef PROJECT_INCLUDE_MATRIX_H_
+#define PROJECT_INCLUDE_MATRIX_H_
+#define MATRIX_MUL_ERROR "The number of the left matrix rows must be equal to the right matrix columns!"
+#define MATRIX_SUM_ERROR "Matrices must be the same size!"
+#include <stdio.h>
+#include <stdlib.h>
 #include <stddef.h>
 
-
 typedef struct Matrix {
+    size_t rows;
+    size_t cols;
+    double** matrix;
 } Matrix;
 
 // Init/release operations
@@ -32,4 +37,4 @@ Matrix* adj(const Matrix* matrix);
 Matrix* inv(const Matrix* matrix);
 
 
-#endif //_MATRIX_H_
+#endif  // PROJECT_INCLUDE_MATRIX_H_
