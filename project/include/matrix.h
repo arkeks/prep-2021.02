@@ -2,9 +2,14 @@
 #define PROJECT_INCLUDE_MATRIX_H_
 #define MATRIX_MUL_ERROR "The number of the left matrix rows must be equal to the right matrix columns!"
 #define MATRIX_SUM_ERROR "Matrices must be the same size!"
+#define MATRIX_SQ_ERROR "Matrix must be squared!"
+#define SUCCESS 0
+#define FAIL 1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <math.h>
 
 typedef struct Matrix {
     size_t rows;
@@ -23,7 +28,7 @@ int get_cols(const Matrix* matrix, size_t* cols);
 int get_elem(const Matrix* matrix, size_t row, size_t col, double* val);
 int set_elem(Matrix* matrix, size_t row, size_t col, double val);
 
-//Math operations
+// Math operations
 Matrix* mul_scalar(const Matrix* matrix, double val);
 Matrix* transp(const Matrix* matrix);
 
