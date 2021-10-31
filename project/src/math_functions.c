@@ -22,17 +22,17 @@ Matrix* transp(const Matrix* matrix) {
 }
 
 Matrix* sum(const Matrix* l, const Matrix* r) {
-    if ((l -> rows == r -> rows) && (l -> cols == r -> cols)) {
-        Matrix* sum_matrix = create_matrix(l -> rows, l -> cols);
+    if ((l -> rows != r -> rows) || (l -> cols != r -> cols)) {
+        printf("%s", MATRIX_SUM_ERROR);
+        return NULL;
+    }
+    Matrix* sum_matrix = create_matrix(l -> rows, l -> cols);
         for (size_t i = 0; i < (l -> rows); ++i) {
             for (size_t g = 0; g < (l -> cols); ++g) {
                 sum_matrix -> matrix[i][g] = l -> matrix[i][g] + r -> matrix[i][g];
             }
         }
-        return sum_matrix;
-    }
-    printf("%s", MATRIX_SUM_ERROR);
-    return NULL;
+    return sum_matrix;
 }
 
 Matrix* sub(const Matrix* l, const Matrix* r) {
@@ -105,8 +105,10 @@ double determinant(const Matrix* matrix) {
     } else {
         double res = 0;
         for (size_t g = 0; g < matrix -> cols; ++g) {
+            Matrix* minor_matrix = get_minor_matrix(matrix, 0, g);
             res += pow(-1, (1+(g+1))) * (matrix -> matrix[0][g])
-                    * determinant(get_minor_matrix(matrix, 0, g));
+                    * determinant(minor_matrix);
+            free_matrix(minor_matrix);
         }
         return res;
     }
@@ -124,10 +126,14 @@ Matrix* adj(const Matrix* matrix) {
     Matrix* adj_matrix = create_matrix(matrix -> rows, matrix -> cols);
     for (size_t i = 0; i < adj_matrix -> rows; ++i) {
         for (size_t g = 0; g < adj_matrix -> cols; ++g) {
-            adj_matrix -> matrix[i][g] = pow(-1, ((i+1)+(g+1))) * determinant(get_minor_matrix(matrix, i, g));
+            Matrix* minor_matrix = get_minor_matrix(matrix, i, g);
+            adj_matrix -> matrix[i][g] = pow(-1, ((i+1)+(g+1))) * determinant(minor_matrix);
+            free_matrix(minor_matrix);
         }
     }
-    return transp(adj_matrix);
+    Matrix* tr_adj_matrix = transp(adj_matrix);
+    free_matrix(adj_matrix);
+    return tr_adj_matrix;
 }
 
 Matrix* inv(const Matrix* matrix) {
@@ -142,10 +148,13 @@ Matrix* inv(const Matrix* matrix) {
             inv_matrix -> matrix[i][g] = matrix -> matrix[i][g];
         }
     }
-    if (determinant(inv_matrix) != 0) {
-        inv_matrix = mul_scalar(adj(inv_matrix), (1.0 / determinant(inv_matrix)));
-        return inv_matrix;
-    } else {
+    if (determinant(inv_matrix) == 0) {
+        free_matrix(inv_matrix);
         return NULL;
     }
+    Matrix* adj_inv_matrix = adj(inv_matrix);
+    Matrix* res = mul_scalar(adj_inv_matrix, (1.0 / determinant(inv_matrix)));
+    free_matrix(inv_matrix);
+    free_matrix(adj_inv_matrix);
+    return res;
 }
