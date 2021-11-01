@@ -31,6 +31,8 @@ int set_elem(Matrix* matrix, size_t row, size_t col, double val);
 // Math operations
 Matrix* mul_scalar(const Matrix* matrix, double val);
 Matrix* transp(const Matrix* matrix);
+Matrix* get_minor_matrix(const Matrix* matrix, size_t el_row, size_t el_col);
+double determinant(const Matrix* matrix);
 
 Matrix* sum(const Matrix* l, const Matrix* r);
 Matrix* sub(const Matrix* l, const Matrix* r);

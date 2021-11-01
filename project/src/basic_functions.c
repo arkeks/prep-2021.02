@@ -1,6 +1,9 @@
 #include "matrix.h"
 
 int get_rows(const Matrix* matrix, size_t* rows) {
+    if (rows == NULL || matrix == NULL) {
+        return FAIL;
+    }
     *rows = matrix -> rows;
     if (*rows) {
         return SUCCESS;
@@ -9,6 +12,9 @@ int get_rows(const Matrix* matrix, size_t* rows) {
 }
 
 int get_cols(const Matrix* matrix, size_t* cols) {
+    if (cols == NULL || matrix == NULL) {
+        return FAIL;
+    }
     *cols = matrix -> cols;
     if (*cols) {
         return SUCCESS;
@@ -17,6 +23,9 @@ int get_cols(const Matrix* matrix, size_t* cols) {
 }
 
 int get_elem(const Matrix* matrix, size_t row, size_t col, double* val) {
+    if (val == NULL || matrix == NULL) {
+        return FAIL;
+    }
     *val = matrix -> matrix[row][col];
     if (*val == matrix -> matrix[row][col]) {
         return SUCCESS;
@@ -25,6 +34,9 @@ int get_elem(const Matrix* matrix, size_t row, size_t col, double* val) {
 }
 
 int set_elem(Matrix* matrix, size_t row, size_t col, double val) {
+    if (matrix == NULL) {
+        return FAIL;
+    }
     matrix -> matrix[row][col] = val;
     if (matrix -> matrix[row][col] == val) {
         return SUCCESS;

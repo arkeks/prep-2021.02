@@ -2,6 +2,7 @@
 
 Matrix* mul_scalar(const Matrix* matrix, double val) {
     Matrix* mul_matrix = create_matrix(matrix -> rows, matrix -> cols);
+
     for (size_t i = 0; i < (matrix -> rows); ++i) {
         for (size_t g = 0; g < (matrix -> cols); ++g) {
             mul_matrix -> matrix[i][g] = matrix -> matrix[i][g];
@@ -13,6 +14,7 @@ Matrix* mul_scalar(const Matrix* matrix, double val) {
 
 Matrix* transp(const Matrix* matrix) {
     Matrix* tr_matrix = create_matrix(matrix -> cols, matrix -> rows);
+
     for (size_t i = 0; i < (tr_matrix -> rows); ++i) {
         for (size_t g = 0; g < (tr_matrix -> cols); ++g) {
             tr_matrix -> matrix[i][g] = matrix -> matrix[g][i];
@@ -26,6 +28,7 @@ Matrix* sum(const Matrix* l, const Matrix* r) {
         printf("%s", MATRIX_SUM_ERROR);
         return NULL;
     }
+
     Matrix* sum_matrix = create_matrix(l -> rows, l -> cols);
         for (size_t i = 0; i < (l -> rows); ++i) {
             for (size_t g = 0; g < (l -> cols); ++g) {
@@ -57,6 +60,7 @@ Matrix* mul(const Matrix* l, const Matrix* r) {
                 mul_matrix -> matrix[i][g] = 0;
             }
         }
+
         for (size_t k = 0; k < (r -> cols); ++k) {
             for (size_t i = 0; i < (l -> rows); ++i) {
                 for (size_t g = 0; g < (l -> cols); ++g) {
@@ -76,6 +80,7 @@ Matrix* get_minor_matrix(const Matrix* matrix, size_t el_row, size_t el_col) {
         minor_matrix -> matrix[0][0] = matrix -> matrix[0][0];
         return minor_matrix;
     }
+
     Matrix* minor_matrix = create_matrix(((matrix -> rows) - 1), ((matrix -> cols) - 1));
     for (size_t i = 0, k = 0; i < minor_matrix -> rows; ++i, ++k) {
         size_t g = 0;
@@ -119,6 +124,7 @@ int det(const Matrix* matrix, double* val) {
         *val = determinant(matrix);
         return SUCCESS;
     }
+
     return FAIL;
 }
 
@@ -142,16 +148,19 @@ Matrix* inv(const Matrix* matrix) {
         inv_matrix -> matrix[0][0] = 1.0 / (matrix -> matrix[0][0]);
         return inv_matrix;
     }
+
     Matrix* inv_matrix = create_matrix(matrix -> rows, matrix -> cols);
     for (size_t i = 0; i < matrix -> rows; ++i) {
         for (size_t g = 0; g < matrix -> cols; ++g) {
             inv_matrix -> matrix[i][g] = matrix -> matrix[i][g];
         }
     }
+
     if (determinant(inv_matrix) == 0) {
         free_matrix(inv_matrix);
         return NULL;
     }
+
     Matrix* adj_inv_matrix = adj(inv_matrix);
     Matrix* res = mul_scalar(adj_inv_matrix, (1.0 / determinant(inv_matrix)));
     free_matrix(inv_matrix);
