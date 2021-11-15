@@ -3,6 +3,9 @@ VALGRIND_LOG = "valgrind.log"
 
 SRCS = \
 	   project/src/main.c \
+	   project/src/parser.c
+HDRS = \
+	   project/include/
 
 .PHONY: all check build test memtest rebuild clean
 
@@ -22,7 +25,7 @@ memtest: $(TARGET)
 rebuild: clean build
 
 $(TARGET): $(SRCS)
-	$(CC) -Wall -Wextra -Werror $(addprefix -I,$(HDRS)) -o $(TARGET) $(CFLAGS) $(SRCS)
+	$(CC) -Wall -Wextra -Werror $(addprefix -I, $(HDRS)) -o $(TARGET) $(CFLAGS) $(SRCS)
 
 clean:
 	rm -f $(TARGET) ${VALGRIND_LOG}
