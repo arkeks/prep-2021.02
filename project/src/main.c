@@ -1,8 +1,8 @@
 #include "parser.h"
 
 int main(int argc, const char **argv) {
-    if (argc != 2) {
-        return -1;
+    if (argc != ARG_NUM) {
+        return WRONG_ARG_ERR;
     }
     info output;
     output.from = NULL;
@@ -25,10 +25,6 @@ int main(int argc, const char **argv) {
         printf("error\n");
     }
     print_info(output_ptr);
-    free(output.from);
-    free(output.to);
-    free(output.date);
-    free(output.boundary);
-    free(eml_text);
+    free_info(output, eml_text);
     return 0;
 }

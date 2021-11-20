@@ -9,10 +9,17 @@
 #define SUCCESS 0
 #define FAIL 1
 #define MEMALLOC_ERR  "Memory has not been allocated :("
+#define WRONG_ARG_ERR -1
+
 #define ROW_NUM 3
 #define COL_NUM 6
+
+#define NO_TYPE 0
 #define PLAIN_T 1
 #define MULTIPART_T 2
+#define ARG_NUM 2
+#define DEF_MEM_INFO 1000
+#define DEF_MEM_BOUND 150
 
 typedef struct {
     char* from;
@@ -61,6 +68,8 @@ lexeme_t get_lexeme(char** str, info** output);
 int parse(char* str, info** output);
 
 char* str_tolower (char* str, size_t str_size);
+
+void free_info (info output, char* buffer);
 
 int print_info(info* output);
 

@@ -2,24 +2,24 @@
 
 int get_info(char** str, info** output, lexeme_t cur_lexeme) {
     if (str == NULL || *str == NULL || output == NULL || *output == NULL) {
-        exit(999);
+        return FAIL;
     }
-    size_t from_size = 1000;
-    size_t to_size = 1000;
+    size_t from_size = DEF_MEM_INFO;
+    size_t to_size = DEF_MEM_INFO;
     size_t seek = -1;
     size_t mem_counter = 0;
 
     char* tmp;
-    char* from_beg;
-    char* to_beg;
-    char* date_beg;
+    char* from_beg = (*output) -> from;
+    char* to_beg = (*output) -> to;
+    char* date_beg = (*output) -> date;
 
     switch (cur_lexeme) {
         case L_FROM: {
             if ((*output)->from) {
                 return SUCCESS;
             } else {
-                (*output)->from = malloc(1000);
+                (*output)->from = malloc(DEF_MEM_INFO);
                 if ((*output)->from == NULL) {
                     printf(MEMALLOC_ERR);
                     return FAIL;
@@ -32,7 +32,7 @@ int get_info(char** str, info** output, lexeme_t cur_lexeme) {
             if ((*output)->to) {
                 return SUCCESS;
             } else {
-                (*output)->to = malloc(1000);
+                (*output)->to = malloc(DEF_MEM_INFO);
                 if ((*output)->to == NULL) {
                     printf(MEMALLOC_ERR);
                     return FAIL;
@@ -45,7 +45,7 @@ int get_info(char** str, info** output, lexeme_t cur_lexeme) {
             if ((*output)->date) {
                 return SUCCESS;
             } else {
-                (*output)->date = malloc(1000);
+                (*output)->date = malloc(DEF_MEM_INFO);
                 if ((*output)->date == NULL) {
                     printf(MEMALLOC_ERR);
                     return FAIL;
@@ -73,7 +73,7 @@ int get_info(char** str, info** output, lexeme_t cur_lexeme) {
             } else {
                 if (cur_lexeme == L_FROM) {
                     if (from_size <= mem_counter) {
-                        tmp = realloc (from_beg, (from_size + 1000));
+                        tmp = realloc (from_beg, (from_size + DEF_MEM_INFO));
                         if (tmp == NULL) {
                             printf(MEMALLOC_ERR);
                             return FAIL;
@@ -85,7 +85,7 @@ int get_info(char** str, info** output, lexeme_t cur_lexeme) {
                     (*output) -> from = from_beg;
                 } else if (cur_lexeme == L_TO) {
                     if (to_size <= mem_counter) {
-                        tmp = realloc (to_beg, (to_size + 1000));
+                        tmp = realloc (to_beg, (to_size + DEF_MEM_INFO));
                         if (tmp == NULL) {
                             printf(MEMALLOC_ERR);
                             return FAIL;
@@ -108,14 +108,14 @@ int get_info(char** str, info** output, lexeme_t cur_lexeme) {
                     ++seek;
                     ++mem_counter;
                     if (from_size <= mem_counter) {
-                        tmp = realloc (from_beg, (from_size + 1000));
+                        tmp = realloc (from_beg, (from_size + DEF_MEM_INFO));
                         if (tmp == NULL) {
                             printf(MEMALLOC_ERR);
                             return FAIL;
                         }
                         from_beg = tmp;
                         (*output) -> from = from_beg + seek;
-                        to_size += 1000;
+                        from_size += DEF_MEM_INFO;
                     }
                     ++((*output) -> from);
                     ++(*str);
@@ -125,14 +125,14 @@ int get_info(char** str, info** output, lexeme_t cur_lexeme) {
                     ++seek;
                     ++mem_counter;
                     if (to_size <= mem_counter) {
-                        tmp = realloc (to_beg, (to_size + 1000));
+                        tmp = realloc (to_beg, (to_size + DEF_MEM_INFO));
                         if (tmp == NULL) {
                             printf(MEMALLOC_ERR);
                             return FAIL;
                         }
                         to_beg = tmp;
                         (*output) -> to = to_beg + seek;
-                        to_size += 1000;
+                        to_size += DEF_MEM_INFO;
                     }
                     ++((*output) -> to);
                     ++(*str);
@@ -152,7 +152,7 @@ int get_info(char** str, info** output, lexeme_t cur_lexeme) {
 
 int get_cont_t(char** str, info** output, lexeme_t cur_lexeme) {
     if (str == NULL || *str == NULL || output == NULL || *output == NULL) {
-        exit(999);
+        return FAIL;
     }
 
     if (cur_lexeme != L_CONT_T) {
@@ -165,7 +165,7 @@ int get_cont_t(char** str, info** output, lexeme_t cur_lexeme) {
         case 'M':
         case 'm':
             if (str_tolower(*str, 9) == NULL) {
-                exit(999);
+                return FAIL;
             }
             if (strncmp(*str, "multipart", 9) == 0) {
                 (*output) -> cont_t = MULTIPART_T;
@@ -190,19 +190,19 @@ int get_cont_t(char** str, info** output, lexeme_t cur_lexeme) {
 
 int get_bound(char** str, info** output, lexeme_t cur_lexeme) {
     if (str == NULL || *str == NULL || output == NULL || *output == NULL) {
-        exit(999);
+        return FAIL;
     }
 
     if (cur_lexeme != L_BOUND || (*output) -> cont_t != MULTIPART_T) {
         return FAIL;
     }
 
-    size_t bound_size = 150;
+    size_t bound_size = DEF_MEM_BOUND;
     size_t mem_counter = 0;
     size_t seek = -1;
     void* tmp;
 
-    (*output) -> boundary = malloc(150);
+    (*output) -> boundary = malloc(DEF_MEM_BOUND);
     if ((*output) -> boundary == NULL) {
         printf(MEMALLOC_ERR);
         return FAIL;
@@ -215,18 +215,16 @@ int get_bound(char** str, info** output, lexeme_t cur_lexeme) {
     while (**str) {
         if (**str == '\r') {
             if (*(*str + 1) == '\n') {
-                /* *(*output) -> boundary = '\0';
-                (*output) -> boundary = bound_beg;
-                ++(*str);*/
 
                 if (bound_size <= mem_counter) {
-                    tmp = realloc (bound_beg, (bound_size + 30));
+                    tmp = realloc (bound_beg, (bound_size + DEF_MEM_BOUND));
                     if (tmp == NULL) {
                         printf(MEMALLOC_ERR);
                         return FAIL;
                     }
                     bound_beg = tmp;
                     (*output) -> boundary = bound_beg + seek;
+                    bound_size += DEF_MEM_BOUND;
                 }
                 *(*output) -> boundary = '\0';
                 (*output) -> boundary = bound_beg;
@@ -237,13 +235,14 @@ int get_bound(char** str, info** output, lexeme_t cur_lexeme) {
             ++(*str);
         } else if (**str == '"' || **str == ' ') {
             if (bound_size <= mem_counter) {
-                tmp = realloc (bound_beg, (bound_size + 30));
+                tmp = realloc (bound_beg, (bound_size + DEF_MEM_BOUND));
                 if (tmp == NULL) {
                     printf(MEMALLOC_ERR);
                     return FAIL;
                 }
                 bound_beg = tmp;
                 (*output) -> boundary = bound_beg + seek;
+                bound_size += DEF_MEM_BOUND;
             }
             *(*output) -> boundary = '\0';
             (*output) -> boundary = bound_beg;
@@ -257,13 +256,14 @@ int get_bound(char** str, info** output, lexeme_t cur_lexeme) {
                 }
             } else {
                 if (bound_size <= mem_counter) {
-                    tmp = realloc (bound_beg, (bound_size + 30));
+                    tmp = realloc (bound_beg, (bound_size + DEF_MEM_BOUND));
                     if (tmp == NULL) {
                         printf(MEMALLOC_ERR);
                         return FAIL;
                     }
                     bound_beg = tmp;
                     (*output) -> boundary = bound_beg + seek;
+                    bound_size += DEF_MEM_BOUND;
                 }
                 *(*output) -> boundary = '\0';
                 (*output) -> boundary = bound_beg;
@@ -274,14 +274,14 @@ int get_bound(char** str, info** output, lexeme_t cur_lexeme) {
             ++seek;
             ++mem_counter;
             if (bound_size <= mem_counter) {
-                tmp = (char*) realloc(bound_beg, (mem_counter + 30));
+                tmp = (char*) realloc(bound_beg, (mem_counter + DEF_MEM_BOUND));
                 if (tmp == NULL) {
                     printf(MEMALLOC_ERR);
                     return FAIL;
                 }
                 bound_beg = tmp;
                 (*output) -> boundary = bound_beg + seek;
-                bound_size += 30;
+                bound_size += DEF_MEM_BOUND;
             }
             ++(*output) -> boundary;
         }
@@ -305,8 +305,8 @@ int parts_num(char** str, info** output, lexeme_t cur_lexeme) {
             return SUCCESS;
         }
     }
-    if ((*output) -> cont_t == 0) {
-        (*output) -> cont_t = 1;
+    if ((*output) -> cont_t == NO_TYPE) {
+        (*output) -> cont_t = PLAIN_T;
     }
 
     if ((*output) -> cont_t) {
@@ -381,7 +381,6 @@ char* get_eml_text(FILE* eml_file) {
         text_size++;
     }
     fseek(eml_file, 0, SEEK_SET);
-    //printf("1\n");
     if (text_size < 1) {
         printf("Empty file!");
         return NULL;
@@ -580,6 +579,13 @@ char* str_tolower (char* str, size_t str_size) {
     return str;
 }
 
+void free_info (info output, char* buffer) {
+    free(output.from);
+    free(output.to);
+    free(output.date);
+    free(output.boundary);
+    free(buffer);
+}
 
 int print_info(info* output) {
     if (output -> from == NULL) {
