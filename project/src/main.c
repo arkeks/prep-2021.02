@@ -16,20 +16,20 @@ int main(void) {
         }
         printf("\n");
     }
-    printf("\n");
 
+    printf("\n");
     Matrix* test_minor;
     test_minor = get_minor_matrix(test_matrix, 0, 0);
-
     printf("minor for test matrix:\n");
+
     for (size_t i = 0; i < test_minor -> rows; ++i) {
         for (size_t g = 0; g < test_minor -> cols; ++g) {
             printf("%lf ", test_minor -> matrix[i][g]);
         }
         printf("\n");
     }
+
     printf("\n");
-    
     Matrix* test_adj;
     test_adj = adj(test_matrix);
     printf("adj matrix for test matrix:\n");
