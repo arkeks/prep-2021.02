@@ -1,10 +1,19 @@
 #pragma once // NOLINT
 
+#include <iostream>
+#include <iomanip>
 #include <vector>
 #include <istream>
+#include <limits>
+#include <cmath>
+#include <fstream>
 
 namespace prep {
 class Matrix {
+    size_t m_rows;
+    size_t m_cols;
+    std::vector < std::vector <double> > matrix;
+
  public:
   explicit Matrix(size_t rows = 0, size_t cols = 0);
   explicit Matrix(std::istream& is);
@@ -40,4 +49,5 @@ class Matrix {
 
 Matrix operator*(double val, const Matrix& matrix);
 std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
+
 }  // namespace prep
