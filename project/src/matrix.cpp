@@ -7,7 +7,7 @@ namespace prep {
         m_cols = cols;
         matrix.resize(rows);
         for (size_t i = 0; i < rows; ++i) {
-            matrix[i].resize(cols);
+            matrix[i].resize(cols, 0);
         }
     }
 
@@ -27,7 +27,7 @@ namespace prep {
         matrix.resize(m_rows);
 
         for (size_t i = 0; i < m_rows; ++i) {
-            matrix[i].resize(m_cols);
+            matrix[i].resize(m_cols, 0);
             for (size_t g = 0; g < m_cols; ++g) {
                 if (!(is >> matrix[i][g])) {
                     throw InvalidMatrixStream();
