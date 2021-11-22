@@ -9,11 +9,6 @@ namespace prep {
         for (size_t i = 0; i < rows; ++i) {
             matrix[i].resize(cols);
         }
-        for (size_t i = 0; i < m_rows; ++i) {
-            for (size_t j = 0; j < m_cols; ++j) {
-                matrix[i][j] = 0;
-            }
-        }
     }
 
     Matrix::Matrix(std::istream& is) {
@@ -26,20 +21,14 @@ namespace prep {
             std::cout << err_msg;
         }
 
-        is >> m_rows;
-        is >> m_cols;
+        if (!(is >> m_rows >> m_cols)) {
+            throw InvalidMatrixStream();
+        }
 
         matrix.resize(m_rows);
-        for (size_t i = 0; i < m_rows; ++i) {
-            matrix[i].resize(m_cols);
-        }
-        for (size_t i = 0; i < m_rows; ++i) {
-            for (size_t j = 0; j < m_cols; ++j) {
-                matrix[i][j] = 0;
-            }
-        }
 
         for (size_t i = 0; i < m_rows; ++i) {
+            matrix[i].resize(m_cols);
             for (size_t g = 0; g < m_cols; ++g) {
                 if (!(is >> matrix[i][g])) {
                     throw InvalidMatrixStream();
