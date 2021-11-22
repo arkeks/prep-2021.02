@@ -29,14 +29,11 @@ namespace prep {
         for (size_t i = 0; i < m_rows; ++i) {
             matrix[i].resize(m_cols);
             for (size_t g = 0; g < m_cols; ++g) {
-
                 if (!(is >> matrix[i][g])) {
                     throw InvalidMatrixStream();
                 }
-
             }
         }
-
     }
 
     size_t Matrix::getRows() const {
@@ -56,11 +53,9 @@ namespace prep {
     }
 
     double& Matrix::operator()(size_t i, size_t j) {
-
         if (i >= m_rows || j >= m_cols) {
             throw OutOfRange(i, j, *this);
         }
-
         return (this -> matrix[i][j]);
     }
 
@@ -89,7 +84,7 @@ namespace prep {
         int p = std::numeric_limits<double>::max_digits10;
         os << matrix.m_rows << ' ' << matrix.m_cols << std::endl;
 
-        for (size_t i = 0; i < matrix.m_rows; ++i ) {
+        for (size_t i = 0; i < matrix.m_rows; ++i) {
             for (size_t j = 0; j < matrix.m_cols; ++j) {
                 os << std::setprecision(p) << matrix.matrix[i][j] << ' ';
             }
@@ -99,7 +94,6 @@ namespace prep {
     }
 
     Matrix Matrix::operator+(const Matrix& rhs) const {
-
         if (this -> m_rows != rhs.m_rows || this -> m_cols != rhs.m_cols) {
             throw DimensionMismatch(*this, rhs);
         }
@@ -116,7 +110,6 @@ namespace prep {
     }
 
     Matrix Matrix::operator-(const Matrix& rhs) const {
-
         if (this -> m_rows != rhs.m_rows || this -> m_cols != rhs.m_cols) {
             throw DimensionMismatch(*this, rhs);
         }
@@ -133,7 +126,6 @@ namespace prep {
     }
 
     Matrix Matrix::operator*(const Matrix& rhs) const {
-
         if (this -> m_cols != rhs.m_rows) {
             throw DimensionMismatch(*this, rhs);
         }
@@ -204,5 +196,4 @@ namespace prep {
     Matrix Matrix::inv() const {
         return *this;
     }
-
-}
+}  // namespace prep
